@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Todo (Client-only MVP)</title>
+    <link rel="stylesheet" href="/src/styles/theme.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="app-header">
+      <h1>Todos</h1>
+      <div class="header-actions">
+        <input id="search" aria-label="Search" placeholder="Search (/)" />
+        <button id="theme-toggle" aria-label="Toggle theme">🌓</button>
+      </div>
+    </header>
+
+    <main id="main" class="app-main" tabindex="-1">
+      <section class="toolbar" aria-label="Toolbar">
+        <div class="filters" role="tablist" aria-label="Status filter">
+          <button role="tab" data-status="all" aria-selected="true">All</button>
+          <button role="tab" data-status="todo">Todo</button>
+          <button role="tab" data-status="in_progress">In Progress</button>
+          <button role="tab" data-status="done">Done</button>
+        </div>
+        <div class="actions">
+          <button id="add-btn">Add Todo (N)</button>
+          <select id="sort">
+            <option value="-createdAt">Newest</option>
+            <option value="dueDate">Due date</option>
+            <option value="priority">Priority</option>
+            <option value="title">Title</option>
+          </select>
+          <button id="bulk-complete" disabled>Bulk Complete</button>
+          <button id="bulk-delete" disabled>Bulk Delete</button>
+          <button id="export-json">Export</button>
+          <button id="import-json">Import</button>
+          <input id="import-file" type="file" accept="application/json" hidden />
+        </div>
+      </section>
+
+      <section aria-label="Todo list">
+        <ul id="todo-list" class="todo-list"></ul>
+        <p id="empty-state" class="muted">No todos yet. Add one to get started.</p>
+      </section>
+
+      <section aria-label="Add or edit" class="modal" id="todo-modal" hidden>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <h2 id="modal-title">Todo</h2>
+          <form id="todo-form">
+            <label>Title
+              <input name="title" required maxlength="200" />
+            </label>
+            <label>Description
+              <textarea name="description" maxlength="2000"></textarea>
+            </label>
+            <label>Status
+              <select name="status">
+                <option value="todo">Todo</option>
+                <option value="in_progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
+            </label>
+            <label>Priority
+              <select name="priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <label>Due date
+              <input type="date" name="dueDate" />
+            </label>
+            <label>Tags (comma-separated)
+              <input name="tags" />
+            </label>
+            <div class="form-actions">
+              <button type="submit">Save</button>
+              <button type="button" id="cancel-btn">Cancel (Esc)</button>
+            </div>
+            <output id="form-error" role="alert" class="error"></output>
+          </form>
+        </div>
+      </section>
+
+      <div id="toast" class="toast" aria-live="polite"></div>
+    </main>
+
+    <footer class="app-footer">
+      <span id="count">0 items</span>
+      <span class="muted">v0.1.0</span>
+    </footer>
+
+    <script type="module" src="/src/app/main.js"></script>
+  </body>
+</html>
+
